@@ -9,7 +9,7 @@ using MD5Hash;
 
 namespace Datos
 {
-    public class UserModel : Model
+    public class UserModel
     {
 
         public string Correo;
@@ -20,20 +20,23 @@ namespace Datos
 
         public bool GetUser()
         {
-            this.Command.CommandText = $"SELECT id, correo, contrasena, rol " + $"FROM usuario WHERE correo = '{this.Correo}'";
-            this.Reader = this.Command.ExecuteReader();
-
-            if (this.Reader.HasRows)
+            using (Model model = new Model())
             {
-                this.Reader.Read();
-                this.Id = Int32.Parse(this.Reader["id"].ToString());
-                this.Correo = this.Reader["correo"].ToString();
-                this.Contrasena = this.Reader["contrasena"].ToString();
-                this.Rol = this.Reader["rol"].ToString();
-                return true;
-            }
+                model.Command.CommandText = $"SELECT id, correo, contrasena, rol " + $"FROM usuario WHERE correo = '{this.Correo}'";
+                model.Reader = model.Command.ExecuteReader();
 
-            return false;
+                if (model.Reader.HasRows)
+                {
+                    model.Reader.Read();
+                    this.Id = Int32.Parse(model.Reader["id"].ToString());
+                    this.Correo = model.Reader["correo"].ToString();
+                    this.Contrasena = model.Reader["contrasena"].ToString();
+                    this.Rol = model.Reader["rol"].ToString();
+                    return true;
+                }
+
+                return false;
+            }
         }
 
     }
