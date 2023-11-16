@@ -33,7 +33,7 @@ namespace Datos
                     this.Correo = model.Reader["correo"].ToString();
                     this.Contrasena = model.Reader["contrasena"].ToString();
                     this.Rol = model.Reader["rol"].ToString();
-                    this.Deshabilitado = bool.Parse(model.Reader["deshabilitado"].ToString());
+                    this.Deshabilitado = Int32.Parse(model.Reader["deshabilitado"].ToString()) == 0 ? false : true;
                     return true;
                 }
 
