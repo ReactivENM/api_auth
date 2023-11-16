@@ -21,6 +21,12 @@ namespace Logica
 
             if (user.GetUser() && Hash.Content(password) == user.Contrasena)
             {
+                if (user.Deshabilitado)
+                {
+                    result.Add("status", "Usuario deshabilitado");
+                    return result;
+                }
+
                 result.Add("Id", user.Id.ToString());
                 result.Add("Correo", user.Correo);
                 result.Add("Rol", user.Rol);
