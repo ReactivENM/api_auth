@@ -17,14 +17,16 @@ namespace Datos
                 Correo = correo
             };
 
-
             if (user.GetUser() && Hash.Content(password) == user.Contrasena)
             {
-                resultado.Add("id", user.Id.ToString());
-                resultado.Add("correo", user.Correo);
-                resultado.Add("rol", user.Rol);
-                resultado.Add("status", "OK");
-                return resultado;
+                if (!user.Deshabilitado)
+                {
+                    resultado.Add("id", user.Id.ToString());
+                    resultado.Add("correo", user.Correo);
+                    resultado.Add("rol", user.Rol);
+                    resultado.Add("status", "OK");
+                    return resultado;
+                }
             }
 
             resultado.Add("status", "Credenciales invalidas o usuario no existente!");

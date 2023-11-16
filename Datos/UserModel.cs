@@ -14,6 +14,7 @@ namespace Datos
 
         public string Correo;
         public string Contrasena;
+        public bool Deshabilitado;
 
         public int Id;
         public string Rol;
@@ -22,7 +23,7 @@ namespace Datos
         {
             using (Model model = new Model())
             {
-                model.Command.CommandText = $"SELECT id, correo, contrasena, rol " + $"FROM usuario WHERE correo = '{this.Correo}'";
+                model.Command.CommandText = $"SELECT id, correo, contrasena, rol, deshabilitado " + $"FROM usuario WHERE correo = '{this.Correo}'";
                 model.Reader = model.Command.ExecuteReader();
 
                 if (model.Reader.HasRows)
@@ -32,6 +33,7 @@ namespace Datos
                     this.Correo = model.Reader["correo"].ToString();
                     this.Contrasena = model.Reader["contrasena"].ToString();
                     this.Rol = model.Reader["rol"].ToString();
+                    this.Deshabilitado = bool.Parse(model.Reader["deshabilitado"].ToString());
                     return true;
                 }
 
